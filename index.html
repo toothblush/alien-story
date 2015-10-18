@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.11.3.js"></script>
+</head>
+
+<style>
+#content {
+	margin: 0;
+	padding: 0;
+	display: block;
+	} 
+.fixed-position { 
+	top: 180px;   
+    position: fixed;  
+    width: 80%;
+    margin: 0 0 0 -40%;
+    left: 50%;
+	}
+.main-character {
+	display: block;
+	margin: auto;
+	z-index: -1;
+}
+.rocket {
+	z-index: -10;
+	}
+.section-outer {
+	height: 500px;
+	width: 100%; 
+	float: center;
+	}
+.section-inner {
+	max-height: 500px;
+	height: 500px;
+	width: 80%;
+	margin: auto;
+	border: solid 0px white;
+	}
+.p0 {
+	background-color: #1D2E36;
+	height: 150px !important;
+	}
+.p1 {
+	background-color: #1D2E36;
+	}
+.mars {
+	background-image: url("mars.png");
+	background-repeat: no-repeat;
+    background-position: center bottom; 
+	}
+.p2 {
+    background: linear-gradient(#1D2E36, #3FC2CE);
+	height: 700px !important;
+	}
+.p3 {
+    background: #3FC2CE;
+	height: 300px !important;
+	}
+.p4 {
+	background-color: orange;
+	} 
+.p5{
+	background-color: #ecf0f1;
+	} 
+.p6{  
+	background-color:#f1c40f;
+	}
+.center {
+	margin: auto;
+	display: block;
+	float: center;
+	z-index: 10;
+	position: relative;
+	}
+.top-of-div {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+	}
+.bottom-of-div {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+	}
+.woman {
+	top: 50px;
+	}
+.ambulance {
+	top: 300px; 
+	position: absolute;
+	}
+</style>
+
+</head>
+<body id="content"> 
+<div class="fixed-position"><img class="main-character" src="baby.png"/></div>
+<div class="section-outer p0"><div class="section-inner"></div></div>  
+<div class="section-outer p1"><div class="section-inner mars"></div></div>  
+<div class="section-outer p2"><div class="section-inner"></div></div>
+<div class="section-outer p3"><div class="section-inner"></div></div>
+<div class="section-outer p5"><div class="section-inner">
+	<div class="center"><a  class="bottom-of-div"><img src="earth.png"/></a>
+	<div class="center"><a  class="ambulance"><img height="200px" width="auto"  src="ambulance.png"/></a></div></div>
+</div></div> 
+<div class="section-outer p6"><div class="section-inner">
+	<div class="center"><a  class="top-of-div woman"><img height="400px" width="auto" src="woman.png"/></a></div>
+</div></div>
+<div class="section-outer p5"><div class="section-inner"></div>
+<div class="section-outer p5"><div class="section-inner"></div>
+
+<script>
+	$('.main-character').attr("width", 100);
+	$('.ambulance').css("left", -100);
+	$(window).scroll(function() {
+		var curY = $(window).scrollTop(); 
+		
+		// rotate img
+		if (curY > 500) { var theta = Math.PI; }
+		else { var theta = curY / 100 * Math.PI/5; }
+		$('.main-character').css({ transform: 'rotate(' + theta + 'rad)' });
+		
+		// scale img
+		var img = $('.main-character'); 
+		if (600 <= curY && curY < 1300) {
+			var scale = (curY / 100 - 5) * -25; 
+			if (scale < -175) { scale = -175; } 
+			}
+		else { var scale = 0; }
+		img.attr("width", 100 + scale / 5 * 2);  
+
+		// hide img
+		if (1300 <= curY && curY < 1900) {
+			img.hide();
+			}
+		else { img.show(); } 
+		
+		//alert(curY);
+		// move image down a bit and left a bit
+		if (curY > 1900) {
+			$('.fixed-position').css('top', '400px');
+			}
+		if (curY <= 1900) {
+			$('.fixed-position').css('top', '180px');
+			}
+		
+		// drive ambulance
+		var car = $('.ambulance');
+		var interval = screen.width / 20; 
+		if (900 <= curY && curY < 2300) { 
+			var move = (curY / 100 - 8.5) * 100;
+			var moveX = (curY / 100 - 8.5) * interval;
+			//alert(move-100 + ", " + curY);
+			}
+		else { var move = 0; }
+		car.css('left',  -400 + moveX);
+	});
+	
+</script> 
+</body>
+
+
+</html> 
