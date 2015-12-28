@@ -1,2 +1,2 @@
-# jacqueline-site
-My website.
+# alien-story
+A story of an alien.
